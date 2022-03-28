@@ -2,16 +2,22 @@ from django.http import JsonResponse
 from urllib import response
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, HttpResponse
-from uber.models import User
+from uber.models import User1
+import json
+
 # Create your views here.
+
 @csrf_exempt
 def newuser(request):
+    json_data = json.loads(request.body)
     if request.method == 'POST' :
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        mobile = request.POST.get('mobile')
-        password = request.POST.get('password')
-        user = User(name=name, email=email, number=mobile, password=password )
+        
+        print(type(json_data))
+        name = json_data['name']
+        email = json_data['email']
+        mobile = json_data['mobile']
+        password = json_data['password']
+        user = User1(name=name, email=email, number=mobile, password=password)
         user.save()
     
     return JsonResponse({

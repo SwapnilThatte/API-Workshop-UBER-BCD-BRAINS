@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class User(models.Model):
-    name = models.CharField( max_length=50)
-    email = models.EmailField(max_length=254)
-    number = models.IntegerField(max_length=10)
-    password = models.CharField( max_length=50)
+class User1(models.Model):
+    name = models.TextField( default=None, unique=True)
+    email = models.EmailField(max_length=254, null=True)
+    number = models.IntegerField(null=True)
+    password = models.CharField( max_length=50, null=True)
 
 class Driver(models.Model):
     name = models.CharField( max_length=50)
