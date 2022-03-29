@@ -21,7 +21,7 @@ def newuser(request):
         user.save()
     
     return JsonResponse({
-        "status" : "SUCCESS" 
+        "status" : "User Created" 
     })
 
 @csrf_exempt
@@ -38,40 +38,44 @@ def newDriver(request):
         newDriver.save()
     
     return JsonResponse({
-        "status" : "SUCCESS" 
+        "status" : "Driver created" 
     })
 
 @csrf_exempt
 def newRide(request):
     json_data = json.loads(request.body)
     if request.method == 'POST' :
+        usr = json_data['usr']
+        usrid = User1.objects.get(name=usr)
         price = json_data['price']
         currentloc = json_data['current_loc']
         destination = json_data['destination']
         pickup = json_data['pickup']
-        ride = Ride(price=price,current_loc=currentloc,destination=destination,pickup=pickup)
+        ride = Ride(usr= usrid ,price=price,current_loc=currentloc,destination=destination,pickup=pickup)
         ride.save()
     
     return JsonResponse({
-        "status" : "SUCCESS" 
+        "status" : "Ride Confirmed" 
     })
 
 @csrf_exempt
 def usrHistory(request):
     json_data = json.loads(request.body)
-    if request.method == 'POST' :
-        
-        print(type(json_data))
-        name = json_data['name']
-        email = json_data['email']
-        mobile = json_data['mobile']
-        password = json_data['password']
-        user = User1(name=name, email=email, number=mobile, password=password)
-        user.save()
-    
-    return JsonResponse({
-        "status" : "SUCCESS" 
-    })
+    if request.method == 'GET' :
+        usr = json_data['usr']
+        usrid = User1.objects.get(name=usr)
+        user_history = usrid.ride_set.all()
+        lis =[]
+        for uh in user_history:
+            d = {
+                "price" : uh.price,
+                "current_loc": uh.current_loc,
+                "destination" : uh.destination,
+                "pickup" : uh.pickup
+            }
+            lis.append(d)
+        print(lis)
+        return JsonResponse(d)
 
 
 

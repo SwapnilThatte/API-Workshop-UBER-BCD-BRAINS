@@ -17,6 +17,7 @@ class Driver(models.Model):
     rating = models.CharField( max_length=50)
 
 class Ride(models.Model):
+    usr = models.ForeignKey(User1, on_delete=models.SET_NULL , null=True)
     price = models.CharField( max_length=50)
     current_loc = models.CharField(max_length=254)
     destination = models.CharField(max_length=50)
