@@ -75,7 +75,7 @@ def usrHistory(request):
             }
             lis.append(d)
         print(lis)
-        return JsonResponse(d)
+        return JsonResponse(lis, safe=False)
 
 
 
