@@ -18,7 +18,7 @@ class Driver(models.Model):
 
 class Ride(models.Model):
     price = models.CharField( max_length=50)
-    current_loc = models.EmailField(max_length=254)
+    current_loc = models.CharField(max_length=254)
     destination = models.CharField(max_length=50)
     pickup = models.TimeField(auto_now=False, auto_now_add=False)
     
